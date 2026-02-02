@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compteur de ses morts</title>
+    <style>
+        :root {
+            --compoment-radius: .2em;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Calibri;
+        }
+
+        .container {
+            display: flex;
+            width: 100vw;
+            margin: 0 auto;
+            background: #fcf4d6;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-size: 1.5em;
+            border-bottom: 3px solid #03004d;
+        }
+
+        div:has(ol) {
+            margin: 25px;
+        }
+        h2{
+            font-size: 1.05em;
+            margin: 0;
+            border-bottom: 2px solid #03004d;
+        }
+        .compoment {
+            margin: .6em;
+            display: flex;
+            align-items: center;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #000;
+            border-radius: .6em;
+            margin: 1.9em;
+        }
+        .form h2{
+            margin :5px
+        }
+        .form button {
+            font-size: 1.2em;
+            background: linear-gradient(#03004d, #3835fc);
+            width: 145px;
+            padding: 10px;
+            margin: 1.03em;
+            color: #FFF;
+            border-radius: var(--compoment-radius);
+        }
+
+        .compoment input[type=text],.compoment input[type=url] {
+            background: #FFF;
+            font-size: 1.2em;
+            padding: 0.3em;
+            border: 1px solid #000;
+            border-radius: var(--compoment-radius);
+            margin-inline-start: 1.06em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Ici le compteur de ses morts</h1>
+        <div class="compoment">
+            <label for="source">URL à integrer : </label>
+            <input type="url"id="source" value="http://localhost:3000">
+        </div>
+        <div>
+            <h2>Comment Installer ?</h2>
+            <ol>
+                <li>Copier l'url de la page</li>
+                <li>Coller la en source navigateur sur votre logiciel StreamLabs ou Obs</li>
+                <li>Taille optimale [largeur : 256 /hauteur : 77]</li>
+                <li>Cliquer sur intéragir</li>
+                <li>[+] du clavier pour incrémenter</li>
+                <li>[0] du clavier pour remettre à 0</li>
+                <li>[Escape] du clavier pour revenir à la valeur de base</li>
+            </ol>
+        </div>
+        <div class="form">
+            <h2>⚙ Paramètres</h2>
+            <div class="compoment">
+                <label for="label">Label : </label>
+                <input type="text" id="label">
+            </div>
+            <div class="compoment">
+                <label for="base">Base :</label>
+                <input type="text" id="base">
+            </div>
+            <button id="updateParam">Mettre à jour</button>
+        </div>
+    </div>
+    <script>
+        var compoments = {
+            label: document.getElementById("label"),
+            base: document.getElementById("base"),
+            update: document.getElementById("updateParam")
+        };
+        fetch('/api/data')
+            .then(res => res.json())
+            .then(data => {
+                compoments.label.value = data.label;
+                compoments.base.value = data.base;
+            });
+        compoments.update.addEventListener("click", function () {
+            let body = {
+                label: compoments.label.value,
+                base: compoments.base.value
+            }
+            fetch('/api/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            }).then(() => alert('Paramètres enregistrés !'));
+        })
+    </script>
+</body>
+
+</html>

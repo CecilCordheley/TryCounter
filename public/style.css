@@ -1,0 +1,83 @@
+@keyframes counterAnim {
+    0% {
+        transform: translateY(5px) scale(0.95);
+        opacity: 0;
+    }
+
+    50% {
+        transform: translateY(0) scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes loopAnim {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(20px);
+    }
+    50%{
+        transform: translateX(0);
+    }
+    75% {
+        transform: translateX(-20px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@font-face {
+    font-family: "customGothic";
+    src: url("Assets/Fiolex_Mephisto.ttf");
+}
+
+@font-face {
+    font-family: "newGothic";
+    src: url("Assets/fuente_dilana.ttf");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Calibri;
+    color: #FFF;
+}
+
+#counter {
+    font-family: customGothic;
+    font-size: 1.6em;
+    width: 250px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    /* background-color:linear-gradiant(#0a004bc2 25%,#000);*/
+    background: linear-gradient(#0a004bc2 25%, #000);
+    border: 2px solid #FFF;
+    margin: 5px;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+#counter span {
+    font-family: newGothic;
+    margin-left: 15px;
+    color: #FF0;
+    font-size: 1.5em;
+    font-style: italic;
+    margin-top: 17px;
+   /* animation: loopAnim 3s ease-out 3s infinite;*/
+}
+
+.animate {
+    animation: counterAnim 0.25s ease-out;
+}
